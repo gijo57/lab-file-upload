@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const mongoose = require('mongoose');
-const multer = require('multer');
-const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const parser = require('../middleware/file-upload');
 
 // ℹ️ Handles password encryption
 const bcryptjs = require('bcryptjs');
@@ -15,12 +13,6 @@ const User = require('../models/User.model');
 
 // require (import) middleware functions
 const { isLoggedIn, isLoggedOut } = require('../middleware/route-guard.js');
-
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary
-});
-
-const parser = multer({ storage: storage });
 
 ////////////////////////////////////////////////////////////////////////
 ///////////////////////////// SIGNUP //////////////////////////////////

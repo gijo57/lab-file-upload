@@ -1,29 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <meta http-equiv='X-UA-Compatible' content='ie=edge' />
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
 
   <body>
     <nav>
       <ul>
-        <li id="to-left">
-          <p><a href="/"> IronTumblr </a></p>
+        <li id='to-left'>
+          <p><a href='/'> IronTumblr </a></p>
         </li>
-        <li id="to-right">
+        <li id='to-right'>
           {{#if user}}
-            <a href="/user-profile">Private</a> <span> | </span>
-            <form id="logout-form" action="/logout" method="POST">
+            <a href='/user-profile'>Private</a>
+            <span> | </span>
+            <form id='logout-form' action='/logout' method='POST'>
               <button>Logout</button>
             </form>
           {{else}}
-            <a href="/signup">Signup</a> <span> | </span>
-            <a href="/login">Login</a> <span> | </span>
+            <a href='/signup'>Signup</a>
+            <span> | </span>
+            <a href='/login'>Login</a>
+            <span> | </span>
           {{/if}}
         </li>
       </ul>
@@ -31,7 +33,7 @@
 
     {{{body}}}
 
-    <script src="/js/script.js"></script>
+    <script src='/js/script.js'></script>
   </body>
 
 </html>
