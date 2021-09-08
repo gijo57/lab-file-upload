@@ -2,12 +2,14 @@
 <img src='{{post.picPath}}' height='400px' alt='{{post.picName}}' />
 <p><b>{{post.content}}</b></p>
 <p>Created by: {{post.creator.username}}</p>
-<form method='POST' action='/comment' enctype='multipart/form-data'>
-  <textarea rows='10' cols='45' name='content'></textarea>
-  <input type='file' name='picture' />
-  <input type='text' value='{{post._id}}' name='id' hidden />
-  <button>Send comment</button>
-</form>
+{{#if user}}
+  <form method='POST' action='/comment' enctype='multipart/form-data'>
+    <textarea rows='10' cols='45' name='content'></textarea>
+    <input type='file' name='picture' />
+    <input type='text' value='{{post._id}}' name='id' hidden />
+    <button>Send comment</button>
+  </form>
+{{/if}}
 <h3>Comments</h3>
 {{#each post.comments}}
   <div class='comment'>

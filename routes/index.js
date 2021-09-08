@@ -52,30 +52,35 @@ router.post(
   }
 );
 
-router.post('/comment', parser.single('picture'), (req, res, next) => {
-  const { id, content } = req.body;
-  let imagePath, imageName;
+router.post(
+  '/comment',
+  isLoggedIn,
+  parser.single('picture'),
+  (req, res, next) => {
+    const { id, content } = req.body;
+    let imagePath, imageName;
 
-  if (req.file) {
-    imagePath = req.file.path;
-    imageName = req.file.originalname;
+    if (req.file) {
+      imagePath = req.file.path;
+      imageName = req.file.originalname;
+    }
+
+    Post.findById(id)
+      .then((post) => {
+        const comment = {
+          content,
+          authorId: post.creator,
+          imagePath,
+          imageName
+        };
+        post.comments.push(comment);
+        return post.save();
+      })
+      .then(() => {
+        res.redirect(`/posts/${id}`);
+      })
+      .catch((e) => next(e));
   }
-
-  Post.findById(id)
-    .then((post) => {
-      const comment = {
-        content,
-        authorId: post.creator,
-        imagePath,
-        imageName
-      };
-      post.comments.push(comment);
-      return post.save();
-    })
-    .then(() => {
-      res.redirect(`/posts/${id}`);
-    })
-    .catch((e) => next(e));
-});
+);
 
 module.exports = router;
