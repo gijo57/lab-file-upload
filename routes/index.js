@@ -19,6 +19,10 @@ router.get('/posts/:id', (req, res) => {
   const { id } = req.params;
   Post.findById(id)
     .populate('creator')
+    .populate({
+      path: 'comments',
+      populate: { path: 'authorId' }
+    })
     .then((post) => {
       console.log(post);
       res.render('post-detail', { post });
@@ -34,7 +38,6 @@ router.post(
     const { content } = req.body;
     const picture = req.file.path || null;
     const user = req.session.user._id;
-    console.log(user);
 
     Post.create({
       content,
@@ -43,11 +46,36 @@ router.post(
       picPath: picture
     })
       .then((post) => {
-        console.log(post);
         res.redirect('/');
       })
       .catch((e) => next(e));
   }
 );
+
+router.post('/comment', parser.single('picture'), (req, res, next) => {
+  const { id, content } = req.body;
+  let imagePath, imageName;
+
+  if (req.file) {
+    imagePath = req.file.path;
+    imageName = req.file.originalname;
+  }
+
+  Post.findById(id)
+    .then((post) => {
+      const comment = {
+        content,
+        authorId: post.creator,
+        imagePath,
+        imageName
+      };
+      post.comments.push(comment);
+      return post.save();
+    })
+    .then(() => {
+      res.redirect(`/posts/${id}`);
+    })
+    .catch((e) => next(e));
+});
 
 module.exports = router;

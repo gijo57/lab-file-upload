@@ -118,3 +118,8 @@ ul li {
   font-weight: bold;
   font-size: 2em;
 }
+
+.comment {
+  margin: 4em 0;
+  border-top: 1px solid grey;
+}

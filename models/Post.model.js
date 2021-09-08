@@ -7,8 +7,29 @@ const postSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
-    picPath: String,
-    picName: String
+    picPath: {
+      type: String,
+      required: true
+    },
+    picName: String,
+    comments: [
+      {
+        content: {
+          type: String,
+          required: true
+        },
+        authorId: {
+          type: Schema.Types.ObjectId,
+          ref: 'User'
+        },
+        imagePath: String,
+        imageName: String,
+        commentedAt: {
+          type: Date,
+          default: Date.now()
+        }
+      }
+    ]
   },
   {
     timestamps: true
