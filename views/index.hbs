@@ -1,2 +1,8 @@
 <h1>{{title}}</h1>
-<a href='/create-post'><h2>Create new post</h2></a>
+{{#if user}}
+  <a href='/create-post'><h2>Create new post</h2></a>
+{{/if}}
+<h2>Posts</h2>
+{{#each posts}}
+  <h3><a href='/posts/{{_id}}'>{{picName}}</a></h3>
+{{/each}}
